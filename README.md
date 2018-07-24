@@ -19,3 +19,8 @@ python viewer.py --mode P --data '../data/example_data.csv'
 ## Controls
 
 Use mouse to select a receiver of a pass. When the correct receiver is selected, next example will be loaded.
+
+
+## Data
+
+Full dataset can be downloaded from the challenge [website](https://github.com/JanVanHaaren/mlsa18-pass-prediction).
