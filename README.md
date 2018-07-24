@@ -2,7 +2,7 @@
 - python 3.6+
 - pandas
 - numpy
-- arcade
+- [arcade](https://github.com/pvcraven/arcade)
 
 ## Usage
 
