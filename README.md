@@ -1,2 +1,20 @@
-# pass-viz
-Tool for vizualizing soccer passes from MLSA 18 Pass Prediction Challenge.
+## Requirements
+- pandas
+- numpy
+- arcade
+
+## Usage
+
+```
+python viewer.py 
+```
+
+defaults to
+
+```
+python viewer.py --mode P --data '../data/example_data.csv'
+```
+
+## Controls
+
+Use mouse to select a receiver of a pass. When the correct receiver is selected, next example will be loaded.
