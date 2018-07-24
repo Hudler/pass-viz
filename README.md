@@ -1,4 +1,5 @@
 ## Requirements
+- python 3.6+
 - pandas
 - numpy
 - arcade
