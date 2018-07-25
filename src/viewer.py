@@ -109,6 +109,7 @@ class Field(arcade.Window):
         if self.mode == 'V':
             for passline in self.passes_list:
                 passline.draw()
+
         elif self.mode == 'P':
             self.p.draw()
 
@@ -120,8 +121,8 @@ class Field(arcade.Window):
             arcade.draw_text(f'MRR: {mrr:.2}, top 1/2/3: {top1:.2}/{top2:.2}/{top3:.2}',
                             30, PITCH_W-30, arcade.color.WHITE, 12)
 
-            arcade.draw_text(f'example {self.cur_example}',
-                            PITCH_L-170, PITCH_W-30, arcade.color.WHITE, 12)
+        arcade.draw_text(f'example {self.cur_example}',
+                        PITCH_L-170, PITCH_W-30, arcade.color.WHITE, 12)
 
     def on_key_press(self, key, modifiers):
         if key == arcade.key.RIGHT:
@@ -133,15 +134,17 @@ class Field(arcade.Window):
                 if int(self.next_example) < len(self.players):
                     self.cur_example = int(self.next_example)
                 self.next_example = ''
-        elif key == arcade.key.UP:
+        elif key == arcade.key.UP and self.mode == 'P':
             self.p.hidden = False
-        elif key == arcade.key.DOWN:
+        elif key == arcade.key.DOWN and self.mode == 'P':
             self.p.hidden = True
         else:
             self.next_example += str(key%48)
 
 
     def on_mouse_press(self, x, y, button, modifiers):
+        if self.mode != 'P':
+            return
         x = x-OFFSET
         y = y-OFFSET
         if button == arcade.MOUSE_BUTTON_LEFT:
@@ -159,7 +162,7 @@ class Field(arcade.Window):
                 self.hits[self.cur_example] = len(self.guesses[self.cur_example])
                 if self.output_file:
                     pd.Series(self.hits).to_csv(self.output_file)
-                self.cur_example += 1
+                self.cur_example = (self.cur_example+1) % len(self.players)
 
 
     def update(self, dt):
@@ -175,11 +178,10 @@ class Field(arcade.Window):
 
         if self.mode == 'V':
             for R, passline in enumerate(self.passes_list):
-                if R == self.players.R.values[self.cur_example]:
-                    color = arcade.color.RED
-                else:
-                    color = arcade.color.YELLOW
+                label = self.players.R.values[self.cur_example]
+                color = arcade.color.RED if R == label else arcade.color.YELLOW
                 passline.update(self.cur_example, color)
+
         if self.mode == 'P':
             self.p.update(self.cur_example)
 
